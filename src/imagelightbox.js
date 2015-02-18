@@ -10,9 +10,9 @@
 
   var cssTransitionSupport = function() {
       var s = document.body || document.documentElement;
-      
+
       s = s.style;
-      
+
       if(s.WebkitTransition === '') return '-webkit-';
       if(s.MozTransition    === '') return '-moz-';
       if(s.OTransition      === '') return '-o-';
@@ -181,11 +181,11 @@
 
             if (options.preloadNext) {
               var nextTarget = targets.eq(targets.index(target) + 1);
-              
+
               if(!nextTarget.length) {
                 nextTarget = targets.eq( 0 );
               }
-              
+
               $('<img />').attr('src', nextTarget.attr('href')).load();
             }
           })
@@ -199,7 +199,7 @@
 
           image.on(hasPointers ? 'pointerup MSPointerUp' : 'click', function(e) {
             e.preventDefault();
-            
+
             if (options.quitOnImgClick) {
               quitLightbox();
               return false;
@@ -208,15 +208,15 @@
             if(wasTouched( e.originalEvent)) {
               return true;
             }
-            
+
             var posX = (e.pageX || e.originalEvent.pageX) - e.target.offsetLeft;
-            
+
             target = targets.eq(targets.index(target) - (imageWidth / 2 > posX ? 1 : -1));
-            
+
             if (!target.length) {
               target = targets.eq(imageWidth / 2 > posX ? targets.length : 0);
             }
-            
+
             loadImage(imageWidth / 2 > posX ? 'left' : 'right');
           })
           .on('touchstart pointerdown MSPointerDown', function(e) {
@@ -299,7 +299,7 @@
             .on('click', function(e) {
               e.preventDefault();
               e.stopPropagation();
-              
+
               target = targets.eq(targets.index(target) + 1);
 
               loadImage('right');
@@ -385,20 +385,20 @@
         if( !image.length ) {
           return true;
         }
-        
+
         e.preventDefault();
-        
+
         if( e.keyCode == 27 ) {
           quitLightbox();
         }
 
         if( e.keyCode == 37 || e.keyCode == 39 ) {
           target = targets.eq( targets.index( target ) - ( e.keyCode == 37 ? 1 : -1 ) );
-          
+
           if( !target.length ) {
             target = targets.eq( e.keyCode == 37 ? targets.length : 0 );
           }
-          
+
           loadImage( e.keyCode == 37 ? 'left' : 'right' );
         }
       });
@@ -408,15 +408,16 @@
       if(!isTargetValid(this)){
         return true;
       }
-      
+
       e.preventDefault();
-      
+      e.stopImmediatePropagation();
+
       if(inProgress) {
         return false;
       }
 
       inProgress = false;
-      
+
       if(options.onStart !== false) {
         options.onStart();
       }
