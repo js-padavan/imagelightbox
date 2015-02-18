@@ -370,6 +370,9 @@
         removeArrows();
         removeCloseButton();
         removeMask();
+        // unsubscribing
+        $(document).off('click',  initialOpen);
+        $(window).off('resize', setImage);
       };
 
     $(window).on('resize', setImage);
@@ -404,7 +407,7 @@
       });
     }
 
-    $( document ).on('click', this.selector, function(e) {
+    function initialOpen(e) {
       if(!isTargetValid(this)){
         return true;
       }
@@ -424,7 +427,9 @@
 
       target = $(this);
       loadImage();
-    });
+    }
+
+    $( document ).on('click', this.selector, initialOpen);
 
     this.each( function() {
       if( !isTargetValid( this ) ) return true;
